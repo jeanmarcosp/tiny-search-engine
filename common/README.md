@@ -1,0 +1,1 @@
+assume docID and pageDirectory are not longer than 10 bytes

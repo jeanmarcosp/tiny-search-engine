@@ -5,17 +5,14 @@
 # updated by Jeanmarcos Perez, October 2021
 
 OBJS = crawler.o 
-LIBS = ../libcs50/libcs50-given.a -I../common/common.a
-
+LIBS = ../libcs50/libcs50-given.a ../common/common.a
 
 CFLAGS = -Wall -pedantic -std=c11 -ggdb $(TESTING) -I../libcs50 -I../common
 CC = gcc
 MAKE = make
+
 # for memory-leak tests
 VALGRIND = valgrind --leak-check=full --show-leak-kinds=all
-
-crawler.o: 
-../lib/file.o: ../lib/file.h
 
 .PHONY: all clean test valgrind
 
@@ -23,6 +20,9 @@ all: crawler
 
 crawler:	$(OBJS) $(LIBS)
 			$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o crawler
+
+test:	testing.sh
+		bash -v testing.sh
 
 valgrind:	valgrind.sh
 			bash -v valgrind.sh
