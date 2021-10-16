@@ -29,7 +29,6 @@ void itemdelete_hash(void* item);
 
 int main(const int argc, char* argv[]){
     int depth = 0;
-    //sscanf(argv[3], "%d", &temp);
     parseArgs(argc, argv, &argv[1], &argv[2], &depth);
     crawl(argv[1], argv[2], depth);
     exit(0);
@@ -42,10 +41,11 @@ static void parseArgs(const int argc, char* argv[], char** seedURL, char** pageD
             sscanf(argv[3], "%d", maxDepth);
 
             //normalize and validate URL
-            normalizeURL(*seedURL);
+            *seedURL = normalizeURL(*seedURL);
 
             if(!isInternalURL(*seedURL) || !pagedir_init(*pageDirectory) || *maxDepth < 0 || *maxDepth > 10){
                 //if any arguments are invalid, print error to stderr and exit non-zero
+                mem_free(*seedURL);
                 fprintf(stderr, "invalid arguments\n");
                 exit(1);
             }
@@ -64,19 +64,15 @@ static void parseArgs(const int argc, char* argv[], char** seedURL, char** pageD
 }
 
 static void crawl(char* seedURL, char* pageDirectory, const int maxDepth){
-    char* initial_url = mem_malloc(strlen(seedURL) + 1);
-    strcpy(initial_url, seedURL);
-
-
     //initialize the hashtable and add the seedURL
     char* item = "";
-    const int num_slots = 10;
+    const int num_slots = 100;
     hashtable_t* pages_seen = hashtable_new(num_slots);
     if (pages_seen == NULL) {
         fprintf(stderr, "hashtable_new failed for pages_seen\n");
         exit(1);
     }
-    hashtable_insert(pages_seen, initial_url, item);
+    hashtable_insert(pages_seen, seedURL, item);
 
     //initialize the bag and add a webpage representing the seedURL at depth 0
     bag_t* pages_to_crawl = bag_new();
@@ -84,21 +80,16 @@ static void crawl(char* seedURL, char* pageDirectory, const int maxDepth){
         fprintf(stderr, "bag_new failed for pages_to_crawl\n");
         exit(1);
     }
-    webpage_t* initial_webpage = webpage_new(initial_url, 0, NULL);
+    webpage_t* initial_webpage = webpage_new(seedURL, 0, NULL);
     bag_insert(pages_to_crawl, initial_webpage);
-
- 
 
     //while bag is not empty
     webpage_t* current_webpage;
     int doc_ID = 1;
     while((current_webpage = bag_extract(pages_to_crawl)) != NULL){ 
 	    //pull a webpage from the bag
-	    //fetch the HTML for that webpage
-	    //if fetch was successful,
+	    //fetch the HTML for that webpage, if fetch was successful,
         if(webpage_fetch(current_webpage)){
-            //char* html = mem_malloc(strlen(webpage_getHTML(current_webpage)));
-            //html = webpage_getHTML(current_webpage);
             //save the webpage to pageDirectory
             pagedir_save(current_webpage, pageDirectory, doc_ID);
             doc_ID++;
@@ -106,12 +97,7 @@ static void crawl(char* seedURL, char* pageDirectory, const int maxDepth){
             if(webpage_getDepth(current_webpage) < maxDepth){
                 //pageScan that HTML
                 pageScan(current_webpage, pages_to_crawl, pages_seen);
-
-            }
-            else{
-                //fprintf(stderr, "webpage is at max depth\n");
-                exit(1);
-            }	    
+            }   
         }
         else{
             fprintf(stderr, "unable to fetch HTML\n");
@@ -135,24 +121,20 @@ static void pageScan(webpage_t* page, bag_t* pagesToCrawl, hashtable_t* pagesSee
         //if that URL is Internal,
         if(isInternalURL(current_url)){
             //insert the webpage into the hashtable
-            //if that succeeded,
             if(hashtable_insert(pagesSeen, current_url, item)){
                 //create a webpage_t for it
                 webpage_t* new_webpage = webpage_new(current_url, webpage_getDepth(page) + 1, NULL);
-                //webpage_fetch(new_webpage);
 			    //insert the webpage into the bag
                 bag_insert(pagesToCrawl, new_webpage);
             }  
             else{
-                //exit(1);
+                mem_free(current_url);
             }
         }
         else{
-            //exit(1);
+            mem_free(current_url);
         }
-	    //mem_free(current_url);
     }
-	    
 }
 
 //delete function for hashtable

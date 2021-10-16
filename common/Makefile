@@ -13,8 +13,6 @@ CFLAGS = -Wall -pedantic -std=c11 -ggdb $(FLAGS) -I../libcs50
 CC = gcc
 MAKE = make
 
-# Build $(LIB) by archiving object files
-# (you will need to drop in copy of set.c, counters.c, hashtable.c)
 $(LIB):	$(OBJS)
 	ar cr $(LIB) $(OBJS)
 

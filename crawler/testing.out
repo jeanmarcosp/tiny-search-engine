@@ -1,3 +1,4 @@
+bash -v testing.sh
 #!/bin/bash
 #
 # testing.sh
@@ -20,22 +21,39 @@ invalid arguments
 ./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html NULL 2
 invalid arguments
 
-# null maxDepth 
+# null maxDepth, known bug, see README.md 
 ./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html letters2 NULL
+
+# non-integer maxDepth, known bug, see README.md 
+./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html letters2 i
 
 # negative maxDepth 
 ./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html letters2 -2
 invalid arguments
 
 # maxDepth greater than 10
-./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html letters2 15
+./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html letters2 15 
 invalid arguments
 
 # letters at depth 2
-#./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html letters2 2
+./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html letters2 2
 
 # letters at depth 5
 #./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html letters5 5
 
 # letters at depth 10
 #./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html letters10 10
+
+# toScrape at depth 0
+#./crawler http://cs50tse.cs.dartmouth.edu/tse/toscrape/ scrape0 0
+
+# toScrape at depth 1
+./crawler http://cs50tse.cs.dartmouth.edu/tse/toscrape/ scrape1 1
+
+# wikipedia at depth 0
+#./crawler http://cs50tse.cs.dartmouth.edu/tse/wikipedia/ wiki0 0
+
+# wikipedia at depth 1
+./crawler http://cs50tse.cs.dartmouth.edu/tse/wikipedia/ wiki1 1 
+
+exit 0

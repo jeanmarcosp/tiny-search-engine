@@ -20,7 +20,6 @@ pagedir_init(const char* pageDirectory){
     //construct the pathname for the .crawler file in that directory
     char* pathname = mem_malloc(strlen(pageDirectory) + 10);
     sprintf(pathname, "%s/.crawler", pageDirectory);
-    //  ../letters-depth-2/.crawler
     //open the file for writing; on error, return false.
     FILE* fp = fopen(pathname, "w");
     if(fp != NULL ){
@@ -33,7 +32,6 @@ pagedir_init(const char* pageDirectory){
         mem_free(pathname);
         return false;
     }
-    
 }
 
 /**************** pagedir_save() ****************/
@@ -41,17 +39,14 @@ pagedir_init(const char* pageDirectory){
 void 
 pagedir_save(const webpage_t* page, const char* pageDirectory, const int docID){
     //construct the pathname for the page file in pageDirectory
-
     char* pathname = mem_malloc(strlen(pageDirectory) + 10);
     sprintf(pathname, "%s/%d", pageDirectory, docID);
     //open that file for writing
     FILE* fp = fopen(pathname, "w");
     if(fp != NULL){
-        //print the URL
+        //print the URL, depth, and contents of the webpage
         fprintf(fp, "%s\n", webpage_getURL(page));
-        //print the depth
         fprintf(fp, "%d\n", webpage_getDepth(page));
-        //print the contents of the webpage
         fprintf(fp, "%s\n", webpage_getHTML(page));
         //close the file
         fclose(fp);
