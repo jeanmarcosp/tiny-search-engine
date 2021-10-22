@@ -6,7 +6,7 @@
 # updated by Jeanmarcos Perez, October 2021
 
 # object files, and the target library
-OBJS = pagedir.o ../libcs50/webpage.h
+OBJS = pagedir.o word.o index.o ../libcs50/webpage.h
 LIB = common.a
 
 CFLAGS = -Wall -pedantic -std=c11 -ggdb $(FLAGS) -I../libcs50
@@ -18,6 +18,8 @@ $(LIB):	$(OBJS)
 
 # Dependencies: object files depend on header files
 pagedir.o:	pagedir.h
+word.o:		word.h
+index.o:	index.h
 
 .PHONY: clean
 
