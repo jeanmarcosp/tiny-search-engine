@@ -43,7 +43,26 @@ index_t* index_new();
 bool index_add(index_t* index, const char* word, int docID);
 
 /**************** index_save ****************/
+/* saves index output to given file
+ * 
+ * Caller provides:
+ *   valid pointer to an index and file to print to
+ * 
+ * We return:
+ *   nothing
+ */ 
 void index_save(index_t* index, const char* indexFilename);
+
+/**************** index_load ****************/
+/* reads file input and creates index
+ * 
+ * Caller provides:
+ *   valid pointer to readable file
+ * 
+ * We return:
+ *   an index pointer 
+ */ 
+index_t* index_load(const char* indexFilename);
 
 /**************** index_delete ****************/
 /* Delete hashtable, calling a delete function on each item.
@@ -58,8 +77,5 @@ void index_save(index_t* index, const char* indexFilename);
  * 
  */
 void index_delete(index_t* index);
-
-index_t* index_load(const char* indexFilename);
-
 
 #endif // __INDEX_H

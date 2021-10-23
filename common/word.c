@@ -1,3 +1,11 @@
+/* 
+ * word.c - CS50 'word' module
+ *
+ * see word.h for more information.
+ *
+ * Jeanmarcos Perez; October 22, 2021
+ */
+
 #include "ctype.h"
 
 char* normalizeWord(char* word){

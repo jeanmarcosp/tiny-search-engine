@@ -32,4 +32,14 @@ bool pagedir_init(const char* pageDirectory);
  */
 void pagedir_save(const webpage_t* page, const char* pageDirectory, const int docID);
 
+/**************** pagedir_validate ****************/
+/*
+ * validates given pageDirectory as crawler directory
+ * 
+ * we return:
+ *      true if valid crawler directory
+ *      false otherwise
+ */ 
+bool pagedir_validate(const char* pageDirectory);
+
 #endif // __PAGEDIR_H

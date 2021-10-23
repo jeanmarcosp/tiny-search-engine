@@ -2,3 +2,4 @@ core
 indexer
 indextest
 *.o
+*.nfs00

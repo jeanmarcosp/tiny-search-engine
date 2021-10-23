@@ -58,3 +58,22 @@ pagedir_save(const webpage_t* page, const char* pageDirectory, const int docID){
         exit(1);
     }
 }
+
+bool 
+pagedir_validate(const char* pageDirectory){
+    //construct the pathname for the .crawler file in that directory
+    char* pathname = mem_malloc(strlen(pageDirectory) + 10);
+    sprintf(pathname, "%s/.crawler", pageDirectory);
+    //open the file for writing; on error, return false.
+    FILE* fp = fopen(pathname, "r");
+    if(fp != NULL ){
+        //close the file and return true.
+        fclose(fp);
+        mem_free(pathname);
+        return true;
+    }
+    else{
+        mem_free(pathname);
+        return false;
+    }
+}

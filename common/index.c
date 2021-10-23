@@ -34,7 +34,7 @@ index_new(){
         return NULL;        // error allocating index
     }
     
-    int slots = 100;
+    int slots = 200;
     new_index->hashtable = hashtable_new(slots);
     return new_index;
 }
@@ -62,13 +62,23 @@ index_add(index_t* index, const char* word, int docID){
 void
 index_save(index_t* index, const char* indexFilename){
     FILE* fp = fopen(indexFilename, "w");
+    if(fp == NULL){
+        fprintf(stderr, "file is null\n");
+        exit(1);
+    }
     hashtable_iterate(index->hashtable, fp, itemprint);
+    fclose(fp);
 }
 
 index_t*
 index_load(const char* indexFilename){
     index_t* index = index_new();
     FILE* fp = fopen(indexFilename, "r");
+
+    if(fp == NULL){
+        fprintf(stderr, "file is null\n");
+        exit(1);
+    }
 
     char* word;
     word = mem_malloc(100);
@@ -81,7 +91,8 @@ index_load(const char* indexFilename){
              counters_set(hashtable_find(index->hashtable, word), docID, count);
              }
     }
-
+    
+    fclose(fp);
     mem_free(word);
     return index;
 }

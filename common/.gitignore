@@ -1,3 +1,5 @@
 *.o
 common
+index
+word
 core

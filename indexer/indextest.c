@@ -31,5 +31,6 @@ int main(const int argc, char* argv[]){
     else{
         index_t* index_result = index_load(argv[1]);
         index_save(index_result, argv[2]);
+        index_delete(index_result);
     }
 }
