@@ -28,23 +28,22 @@ Given arguments from the command line, validate them
 ### indexBuild
 Builds an in-memory index from webpage files it finds in the pageDirectory. Pseudocode:
 
-  creates a new 'index' object
-  loops over document ID numbers, counting from 1
-    loads a webpage from the document file 'pageDirectory/id'
-    if successful, 
-      passes the webpage and docID to indexPage
+      creates a new 'index' object
+      loops over document ID numbers, counting from 1
+        loads a webpage from the document file 'pageDirectory/id'
+        if successful, 
+          passes the webpage and docID to indexPage
 
 
 ### indexPage
 Scans a webpage document to add its words to the index. Pseudocode:
 
- steps through each word of the webpage,
-   skips trivial words (less than length 3),
-   normalizes the word (converts to lower case),
-   looks up the word in the index,
-     adding the word to the index if needed
-   increments the count of occurrences of this word in this docID
-
+     steps through each word of the webpage,
+       skips trivial words (less than length 3),
+       normalizes the word (converts to lower case),
+       looks up the word in the index,
+         adding the word to the index if needed
+       increments the count of occurrences of this word in this docID
 
 ## Other modules
 
@@ -60,24 +59,24 @@ We leverage the modules of libcs50, most notably bag, hashtable, and webpage. Se
 ## Function prototypes
 
 ### indexer
-`
+```c
 int main(const int argc, char* argv[]);
 static void parseArgs(const int argc, char* argv[]);
 static void indexBuild(const char* pageDirectory, const char* indexFilename);
 static void indexPage(webpage_t* webpage, index_t* index, const int docID);
-`
+```
 
 ### word
-`
+```c
 char* normalizeWord(const char* word);
-`
+````
 
 ### pagedir
-`
+```c
 bool pagedir_init(const char* pageDirectory);
 void pagedir_save(const webpage_t* page, const char* pageDirectory, const int docID);
 bool pagedir_validate(const char* pageDirectory);
-`
+```
 
 ## Error Handling and Recovery
 All the command-line parameters are rigorously checked before any data structures are allocated or work begins; problems result in a message printed to stderr and a non-zero exit status.
