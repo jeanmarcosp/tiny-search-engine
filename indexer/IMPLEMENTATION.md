@@ -27,24 +27,24 @@ Given arguments from the command line, validate them
 
 ### indexBuild
 Builds an in-memory index from webpage files it finds in the pageDirectory. Pseudocode:
-`
+
   creates a new 'index' object
   loops over document ID numbers, counting from 1
     loads a webpage from the document file 'pageDirectory/id'
     if successful, 
       passes the webpage and docID to indexPage
-`
+
 
 ### indexPage
 Scans a webpage document to add its words to the index. Pseudocode:
-`
+
  steps through each word of the webpage,
    skips trivial words (less than length 3),
    normalizes the word (converts to lower case),
    looks up the word in the index,
      adding the word to the index if needed
    increments the count of occurrences of this word in this docID
-`
+
 
 ## Other modules
 
