@@ -78,4 +78,18 @@ index_t* index_load(const char* indexFilename);
  */
 void index_delete(index_t* index);
 
+/**************** index_find ****************/
+/* Return counter associated with given key
+ * 
+ * Caller provides: 
+ *   index and key
+ * 
+ * We assume:
+ *   index and key are valid
+ * 
+ * We return: 
+ *  counter associated with given key
+ */ 
+counters_t* index_find(index_t* index, const char* key);
+
 #endif // __INDEX_H

@@ -105,6 +105,11 @@ index_delete(index_t* index){
     }
 }
 
+counters_t*
+index_find(index_t* index, const char* key){
+    return hashtable_find(index->hashtable, key);
+}
+
 void itemdelete(void* item){
     counters_t* ctrs = item;
     if(ctrs != NULL){

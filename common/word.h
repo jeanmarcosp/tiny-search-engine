@@ -23,4 +23,24 @@
  */
 char* normalizeWord(const char* word);
 
+/**************** tokenize  ****************/
+/*
+ * turn given string of words into individual 
+ * tokenized words
+ *
+ * Caller provides:
+ *   valid pointer to query string
+ *   valid array of pointers to strings
+ * 
+ * We return:
+ *   integer representing number of tokens
+ * 
+ * Note:
+ *   the array passed into the function
+ *   will be modified
+ * 
+ */
+void tokenize(char* query, char** words, int* pos);
+
+
 #endif // __WORD_H
