@@ -1,6 +1,6 @@
 # Tiny Search Engine Documentation
 
-Authors:
+Author:
 
 - Jeanmarcos Perez
 
